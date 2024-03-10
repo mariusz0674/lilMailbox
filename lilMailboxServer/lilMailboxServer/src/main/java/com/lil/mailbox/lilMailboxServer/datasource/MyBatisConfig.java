@@ -1,4 +1,4 @@
-package com.lil.mailbox.lilMailboxServer.datasource.message;
+package com.lil.mailbox.lilMailboxServer.datasource;
 
 
 import org.mybatis.spring.annotation.MapperScan;
@@ -11,14 +11,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@MapperScan(basePackages = "com.lil.mailbox.lilMailboxServer.datasource.message")
+@MapperScan(basePackages = "com.lil.mailbox.lilMailboxServer.datasource.postgres")
 public class MyBatisConfig {
 
     @Bean
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
-        sqlSessionFactoryBean.setTypeAliasesPackage("com.lil.mailbox.lilMailboxServer.datasource.message.domain");
         return sqlSessionFactoryBean.getObject();
     }
 

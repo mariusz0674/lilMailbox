@@ -13,21 +13,20 @@ import java.util.UUID;
 public class UserDAO {
     private final UserMapper userMapper;
 
-    void insertUser(UUID id, String userName){
+    public void insertUser(UUID id, String userName){
         userMapper.insertUser(id, userName);
     }
 
-    User getUserById(UUID id){
-        return userMapper.getUserById(id);
-    }
-
-    User getUserByUserName(String username){
-        return userMapper.getUserByUserName(username);
-    }
-
-    List<User> getAllUsers(){
+    public List<User> getAllUsers(){
         return userMapper.getAllUsers();
     }
 
+    public User getUserById(UUID id){
+        return userMapper.getUserById(id);
+    }
+
+    public User getUserByUserName(String username){
+        return userMapper.getUserByUserName(username);
+    }
 
 }

@@ -1,10 +1,12 @@
 package com.lil.mailbox.lilMailboxServer.message;
 
-import com.lil.mailbox.lilMailboxServer.datasource.models.Message;
+import com.lil.mailbox.lilMailboxServer.datasource.models.MessageFolder;
 
 import java.util.UUID;
 
 public interface MessageService {
 
-    Message getMessageById(UUID id);
+    MessageFolder getMessageFolderById(UUID id);
+
+    void sendMessage(Message message);
 }

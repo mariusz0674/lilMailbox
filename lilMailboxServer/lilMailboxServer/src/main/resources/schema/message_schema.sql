@@ -1,9 +1,20 @@
 DROP TABLE messages;
 
-CREATE TABLE IF NOT EXISTS messages
+create table public.messages
 (
-    id uuid PRIMARY KEY,
-    from_user VARCHAR(100) NOT NULL,
-    to_user VARCHAR(100) NOT NULL,
-    s3_key VARCHAR(100) NOT NULL
+    id        uuid         not null
+        constraint messages_pk
+            primary key,
+    from_user uuid         not null
+        constraint messages_user_data_id_fk
+            references public.user_data,
+    to_user   uuid         not null
+        constraint messages_user_data_id_fk_2
+            references public.user_data,
+    s3_key    varchar(100) not null,
+    title     varchar
 );
+
+
+
+

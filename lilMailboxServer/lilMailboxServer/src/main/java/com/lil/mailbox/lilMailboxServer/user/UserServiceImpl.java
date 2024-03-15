@@ -23,6 +23,7 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() {
         return this.userDAO.getAllUsers();
     }
+
     @Override
     public User getUserById(UUID id) {
         return this.userDAO.getUserById(id);

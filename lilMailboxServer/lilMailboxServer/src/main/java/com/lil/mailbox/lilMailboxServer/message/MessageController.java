@@ -22,4 +22,9 @@ public class MessageController {
     public List<Message> getAllUserMessages(@RequestBody String userId) {
         return messageService.getUserAllSentMessages(UUID.fromString(userId));
     }
+
+    @PostMapping("/send")
+    public void sendMessage(@RequestBody Message message) {
+        messageService.sendMessage(message);
+    }
 }

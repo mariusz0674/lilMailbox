@@ -2,6 +2,7 @@ package com.lil.mailbox.lilMailboxServer.message;
 
 import com.lil.mailbox.lilMailboxServer.datasource.MessageDAO;
 import com.lil.mailbox.lilMailboxServer.datasource.models.MessageFolder;
+import com.lil.mailbox.lilMailboxServer.minio.MinioService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,17 @@ import java.util.UUID;
 public class MessageServiceImpl implements MessageService {
 
     private final MessageDAO messageDao;
+    private final MinioService minioService;
 
     @Override
-    public MessageFolder getMessageFolderById(UUID id) {
-        return this.messageDao.getMessageById(id);
+    public Message getMessageFolderById(UUID id) {
+        MessageFolder messageFolder = this.messageDao.getMessageById(id);
+        return Message.builder()
+                .fromUser(messageFolder.getFromUser())
+                .toUser(messageFolder.getToUser())
+                .title(messageFolder.getTitle())
+                .content(minioService.getContent(messageFolder.getS3Key()))
+                .build();
     }
 
     @Override
@@ -25,7 +33,7 @@ public class MessageServiceImpl implements MessageService {
                 .fromUser(messageFolder.getFromUser())
                 .toUser(messageFolder.getToUser())
                 .title(messageFolder.getTitle())
-                .content(messageFolder.getS3Key())
+                .content(minioService.getContent(messageFolder.getS3Key()))
                 .build()).toList();
     }
 
@@ -35,7 +43,7 @@ public class MessageServiceImpl implements MessageService {
                 .fromUser(messageFolder.getFromUser())
                 .toUser(messageFolder.getToUser())
                 .title(messageFolder.getTitle())
-                .content(messageFolder.getS3Key())
+                .content(minioService.getContent(messageFolder.getS3Key()))
                 .build()).toList();
     }
 
@@ -50,7 +58,7 @@ public class MessageServiceImpl implements MessageService {
                 .id(UUID.randomUUID())
                 .fromUser(message.getFromUser())
                 .toUser(message.getToUser())
-                .s3Key(message.getContent())
+                .s3Key(minioService.putContent(message.getContent()))
                 .title(message.getTitle())
                 .build();
         this.messageDao.insertMessage(messageFolder);

@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface MessageService {
 
-    MessageFolder getMessageFolderById(UUID id);
+    Message getMessageFolderById(UUID id);
 
     List<Message> getUserAllInboxMessages(UUID userId);
 

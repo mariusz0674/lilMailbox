@@ -40,6 +40,9 @@ public interface MessageMapper {
     })
     List<MessageFolder> getMessagesByToUserId(@Param("id") UUID id);
 
+    @Select("SELECT COUNT(*) FROM public.messages WHERE to_user = #{userId} AND read = false")
+    int countUnreadForUser(UUID userId);
+
     @Insert("INSERT INTO public.messages (id, from_user, to_user, s3_key, title, read) " +
             "VALUES (#{id}, #{fromUser}, #{toUser}, #{s3Key}, #{title}, #{read})")
     void insertMessage(MessageFolder message);

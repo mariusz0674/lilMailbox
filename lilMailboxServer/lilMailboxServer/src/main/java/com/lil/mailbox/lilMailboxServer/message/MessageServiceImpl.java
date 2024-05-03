@@ -1,8 +1,9 @@
 package com.lil.mailbox.lilMailboxServer.message;
 
+import com.lil.mailbox.lilMailboxServer.counters.UserUnreadCounterService;
 import com.lil.mailbox.lilMailboxServer.datasource.MessageDAO;
 import com.lil.mailbox.lilMailboxServer.datasource.models.MessageFolder;
-import com.lil.mailbox.lilMailboxServer.minio.MinioService;
+import com.lil.mailbox.lilMailboxServer.datasource.minio.MinioService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ public class MessageServiceImpl implements MessageService {
 
     private final MessageDAO messageDao;
     private final MinioService minioService;
+    private final UserUnreadCounterService userUnreadCounterService;
 
     @Override
     public Message getMessageFolderById(UUID id) {
@@ -41,12 +43,14 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public void sendMessage(Message message) {
         insertMessageFolder(message);
+        userUnreadCounterService.incrementUnreadCount(message.getToUser());
     }
 
     @Override
     public Message getMessage(UUID messageId) {
         messageDao.makAsRead(messageId);
         MessageFolder messageF = messageDao.getMessageById(messageId);
+        userUnreadCounterService.decrementUnreadCount(messageF.getToUser());
         return Message.builder()
                 .fromUser(messageF.getFromUser())
                 .toUser(messageF.getToUser())

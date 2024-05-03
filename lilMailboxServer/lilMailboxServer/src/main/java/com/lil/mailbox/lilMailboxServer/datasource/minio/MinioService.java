@@ -1,4 +1,4 @@
-package com.lil.mailbox.lilMailboxServer.minio;
+package com.lil.mailbox.lilMailboxServer.datasource.minio;
 
 import io.minio.GetObjectArgs;
 import io.minio.MinioClient;

@@ -13,4 +13,5 @@ public class MessageFolder {
     private UUID toUser;
     private String s3Key;
     private String title;
+    private boolean read;
 }

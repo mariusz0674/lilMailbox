@@ -1,5 +1,6 @@
 package com.lil.mailbox.lilMailboxServer.message;
 
+import com.lil.mailbox.lilMailboxServer.datasource.models.MessageFolder;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,13 +14,13 @@ public class MessageController {
 
     private final MessageService messageService;
 
-    @PostMapping("/userInbox")
-    public List<Message> getUserAllInboxMessages(@RequestBody String userId) {
+    @GetMapping("/userInbox")
+    public List<MessageFolder> getUserAllInboxMessages(@RequestParam String userId) {
         return messageService.getUserAllInboxMessages(UUID.fromString(userId));
     }
 
-    @PostMapping("/userSent")
-    public List<Message> getAllUserMessages(@RequestBody String userId) {
+    @GetMapping("/userSent")
+    public List<MessageFolder> getAllUserMessages(@RequestParam String userId) {
         return messageService.getUserAllSentMessages(UUID.fromString(userId));
     }
 
@@ -27,4 +28,11 @@ public class MessageController {
     public void sendMessage(@RequestBody Message message) {
         messageService.sendMessage(message);
     }
+
+    @GetMapping("/message")
+    public Message getMessage(@RequestParam String messageId) {
+        return messageService.getMessage(UUID.fromString(messageId));
+    }
+
+
 }

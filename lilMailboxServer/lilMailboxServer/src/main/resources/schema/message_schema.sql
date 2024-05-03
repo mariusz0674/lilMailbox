@@ -1,4 +1,4 @@
-DROP TABLE messages;
+DROP TABLE IF EXISTS messages;
 
 create table public.messages
 (
@@ -12,7 +12,9 @@ create table public.messages
         constraint messages_user_data_id_fk_2
             references public.user_data,
     s3_key    varchar(100) not null,
-    title     varchar
+    title     varchar,
+    read     boolean
+
 );
 
 

@@ -9,11 +9,14 @@ public interface MessageService {
 
     Message getMessageFolderById(UUID id);
 
-    List<Message> getUserAllInboxMessages(UUID userId);
+    List<MessageFolder> getUserAllInboxMessages(UUID userId);
 
-    List<Message> getUserAllSentMessages(UUID userId);
+    List<MessageFolder> getUserAllSentMessages(UUID userId);
 
     void sendMessage(Message message);
+
+    Message getMessage(UUID messageId);
+
 }
 
 

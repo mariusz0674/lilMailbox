@@ -30,4 +30,8 @@ public class MessageDAO {
         messageMapper.insertMessage(message);
     }
 
+    public void makAsRead(UUID messageId){
+        messageMapper.markAsRead(messageId);
+    }
+
 }

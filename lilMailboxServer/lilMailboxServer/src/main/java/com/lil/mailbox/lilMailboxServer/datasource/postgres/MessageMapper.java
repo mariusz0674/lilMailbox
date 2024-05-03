@@ -13,8 +13,8 @@ public interface MessageMapper {
             @Result(property = "fromUser", column = "from_user"),
             @Result(property = "toUser", column = "to_user"),
             @Result(property = "s3Key", column = "s3_key"),
-            @Result(property = "title", column = "title")
-
+            @Result(property = "title", column = "title"),
+            @Result(property = "read", column = "read")
     })
     MessageFolder getMessageById(@Param("id") UUID id);
 
@@ -24,8 +24,8 @@ public interface MessageMapper {
             @Result(property = "fromUser", column = "from_user"),
             @Result(property = "toUser", column = "to_user"),
             @Result(property = "s3Key", column = "s3_key"),
-            @Result(property = "title", column = "title")
-
+            @Result(property = "title", column = "title"),
+            @Result(property = "read", column = "read")
     })
     List<MessageFolder> getMessagesByFromUserId(@Param("id") UUID id);
 
@@ -35,12 +35,15 @@ public interface MessageMapper {
             @Result(property = "fromUser", column = "from_user"),
             @Result(property = "toUser", column = "to_user"),
             @Result(property = "s3Key", column = "s3_key"),
-            @Result(property = "title", column = "title")
-
+            @Result(property = "title", column = "title"),
+            @Result(property = "read", column = "read")
     })
     List<MessageFolder> getMessagesByToUserId(@Param("id") UUID id);
 
-    @Insert("INSERT INTO public.messages (id, from_user, to_user, s3_key, title) " +
-            "VALUES (#{id}, #{fromUser}, #{toUser}, #{s3Key}, #{title})")
+    @Insert("INSERT INTO public.messages (id, from_user, to_user, s3_key, title, read) " +
+            "VALUES (#{id}, #{fromUser}, #{toUser}, #{s3Key}, #{title}, #{read})")
     void insertMessage(MessageFolder message);
+
+    @Update("UPDATE public.messages SET read = true WHERE id = #{messageId}")
+    void markAsRead(UUID messageId);
 }

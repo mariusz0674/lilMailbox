@@ -6,3 +6,5 @@ spring:
     driver-class-name: org.postgresql.Driver
 mybatis:
   type-handlers-package: com.lil.mailbox.lilMailboxServer.datasource.postgres.typehandlers
+server:
+  port: 8081

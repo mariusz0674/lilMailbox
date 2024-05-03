@@ -24,33 +24,36 @@ public class MessageServiceImpl implements MessageService {
                 .toUser(messageFolder.getToUser())
                 .title(messageFolder.getTitle())
                 .content(minioService.getContent(messageFolder.getS3Key()))
+                .read(messageFolder.isRead())
                 .build();
     }
 
     @Override
-    public List<Message> getUserAllInboxMessages(UUID userId) {
-        return this.messageDao.getAllMessagesByFromUserId(userId).stream().map(messageFolder -> Message.builder()
-                .fromUser(messageFolder.getFromUser())
-                .toUser(messageFolder.getToUser())
-                .title(messageFolder.getTitle())
-                .content(minioService.getContent(messageFolder.getS3Key()))
-                .build()).toList();
+    public List<MessageFolder> getUserAllInboxMessages(UUID userId) {
+        return this.messageDao.getAllMessagesByTomUserId(userId);
     }
 
     @Override
-    public List<Message> getUserAllSentMessages(UUID userId) {
-        return this.messageDao.getAllMessagesByTomUserId(userId).stream().map(messageFolder -> Message.builder()
-                .fromUser(messageFolder.getFromUser())
-                .toUser(messageFolder.getToUser())
-                .title(messageFolder.getTitle())
-                .content(minioService.getContent(messageFolder.getS3Key()))
-                .build()).toList();
+    public List<MessageFolder> getUserAllSentMessages(UUID userId) {
+        return this.messageDao.getAllMessagesByFromUserId(userId);
     }
 
     @Override
     public void sendMessage(Message message) {
-
         insertMessageFolder(message);
+    }
+
+    @Override
+    public Message getMessage(UUID messageId) {
+        messageDao.makAsRead(messageId);
+        MessageFolder messageF = messageDao.getMessageById(messageId);
+        return Message.builder()
+                .fromUser(messageF.getFromUser())
+                .toUser(messageF.getToUser())
+                .title(messageF.getTitle())
+                .content(minioService.getContent(messageF.getS3Key()))
+                .read(messageF.isRead())
+                .build();
     }
 
     private void insertMessageFolder(Message message) {
@@ -60,6 +63,7 @@ public class MessageServiceImpl implements MessageService {
                 .toUser(message.getToUser())
                 .s3Key(minioService.putContent(message.getContent()))
                 .title(message.getTitle())
+                .read(false)
                 .build();
         this.messageDao.insertMessage(messageFolder);
     }

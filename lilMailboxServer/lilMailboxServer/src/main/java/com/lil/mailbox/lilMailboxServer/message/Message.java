@@ -12,4 +12,5 @@ public class Message {
     private UUID toUser;
     private String content;
     private String title;
+    private boolean read;
 }

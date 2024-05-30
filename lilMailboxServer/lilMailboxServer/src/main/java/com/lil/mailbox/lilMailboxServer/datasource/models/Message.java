@@ -1,4 +1,4 @@
-package com.lil.mailbox.lilMailboxServer.message;
+package com.lil.mailbox.lilMailboxServer.datasource.models;
 
 import lombok.Builder;
 import lombok.Data;

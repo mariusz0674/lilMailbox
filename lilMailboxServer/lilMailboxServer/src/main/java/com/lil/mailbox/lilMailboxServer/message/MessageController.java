@@ -1,11 +1,11 @@
 package com.lil.mailbox.lilMailboxServer.message;
 
-import com.lil.mailbox.lilMailboxServer.datasource.models.MessageFolder;
 import lombok.AllArgsConstructor;
+import org.bson.Document;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @AllArgsConstructor
 @RequestMapping("/api/v1/message")
@@ -15,24 +15,30 @@ public class MessageController {
     private final MessageService messageService;
 
     @GetMapping("/userInbox")
-    public List<MessageFolder> getUserAllInboxMessages(@RequestParam String userId) {
-        return messageService.getUserAllInboxMessages(UUID.fromString(userId));
+    public List<Document> getUserAllInboxMessages(@RequestParam String userId) {
+        return messageService.getUserAllInboxMessages(userId);
     }
+
 
     @GetMapping("/userSent")
-    public List<MessageFolder> getAllUserMessages(@RequestParam String userId) {
-        return messageService.getUserAllSentMessages(UUID.fromString(userId));
+    public List<Document> getAllUserMessages(@RequestParam String userId) {
+        return messageService.getUserAllSentMessages(userId);
     }
 
-    @PostMapping("/send")
-    public void sendMessage(@RequestBody Message message) {
+    @PostMapping(value = "/send", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void sendMessage(@RequestBody Document message) {
         messageService.sendMessage(message);
     }
 
     @GetMapping("/message")
-    public Message getMessage(@RequestParam String messageId) {
-        return messageService.getMessage(UUID.fromString(messageId));
+    public Document getMessage(@RequestParam String messageId) {
+        return messageService.getMessageById(messageId);
     }
+
+//    @PostMapping("/replyToMessage")
+//    public reply(@RequestParam String messageId, @RequestBody Document message) {
+//        return messageService.replyMessage(messageId, message);
+//    }
 
 
 }

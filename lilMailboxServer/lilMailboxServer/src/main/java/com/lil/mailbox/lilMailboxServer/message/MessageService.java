@@ -1,21 +1,20 @@
 package com.lil.mailbox.lilMailboxServer.message;
 
-import com.lil.mailbox.lilMailboxServer.datasource.models.MessageFolder;
+import org.bson.Document;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface MessageService {
 
-    Message getMessageFolderById(UUID id);
+    Document getMessageById(String id);
 
-    List<MessageFolder> getUserAllInboxMessages(UUID userId);
+    List<Document> getUserAllInboxMessages(String userId);
 
-    List<MessageFolder> getUserAllSentMessages(UUID userId);
+    List<Document> getUserAllSentMessages(String userId);
 
-    void sendMessage(Message message);
+    void sendMessage(Document message);
 
-    Message getMessage(UUID messageId);
+    void replyMessage(String messageId, Document message);
 
 }
 

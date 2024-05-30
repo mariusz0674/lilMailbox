@@ -29,7 +29,7 @@ public interface MessageMapper {
     })
     List<MessageFolder> getMessagesByFromUserId(@Param("id") UUID id);
 
-    @Select("SELECT * FROM MESSAGES WHERE to_user = #{id}")
+    @Select("SELECT * FROM MESSAGES_INBOX WHERE to_user = #{id}")
     @Results({
             @Result(property = "id", column = "id"),
             @Result(property = "fromUser", column = "from_user"),
@@ -39,6 +39,18 @@ public interface MessageMapper {
             @Result(property = "read", column = "read")
     })
     List<MessageFolder> getMessagesByToUserId(@Param("id") UUID id);
+
+    @Select("SELECT * FROM MESSAGES_ARCHIVE WHERE to_user = #{id}")
+    @Results({
+            @Result(property = "id", column = "id"),
+            @Result(property = "fromUser", column = "from_user"),
+            @Result(property = "toUser", column = "to_user"),
+            @Result(property = "s3Key", column = "s3_key"),
+            @Result(property = "title", column = "title"),
+            @Result(property = "read", column = "read")
+    })
+    List<MessageFolder> getArchiveMessagesByToUserId(@Param("id") UUID id);
+
 
     @Select("SELECT COUNT(*) FROM public.messages WHERE to_user = #{userId} AND read = false")
     int countUnreadForUser(UUID userId);

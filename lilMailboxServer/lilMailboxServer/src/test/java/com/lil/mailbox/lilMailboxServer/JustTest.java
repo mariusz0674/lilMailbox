@@ -1,9 +1,9 @@
 package com.lil.mailbox.lilMailboxServer;
 
-import com.lil.mailbox.lilMailboxServer.datasource.models.MessageFolder;
-import com.lil.mailbox.lilMailboxServer.message.Message;
+import com.lil.mailbox.lilMailboxServer.datasource.models.Message;
 import com.lil.mailbox.lilMailboxServer.message.MessageServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.Document;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +24,7 @@ public class JustTest {
 
         UUID messageId = new UUID(0,1);
         log.info(messageId.toString());
-        Message article = messageService.getMessageFolderById(messageId);
+        Document article = messageService.getMessageById(String.valueOf(messageId));
         System.out.println(article);
 
         Long val = 1L;

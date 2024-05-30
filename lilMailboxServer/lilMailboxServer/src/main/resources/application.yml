@@ -4,6 +4,9 @@ spring:
     username: user
     password: q1w2e3r4
     driver-class-name: org.postgresql.Driver
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/mailbox
 mybatis:
   type-handlers-package: com.lil.mailbox.lilMailboxServer.datasource.postgres.typehandlers
 server:

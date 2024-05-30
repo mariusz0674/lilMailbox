@@ -26,6 +26,10 @@ public class MessageDAO {
         return messageMapper.getMessagesByToUserId(id);
     }
 
+    public List<MessageFolder> getUserAllArchiveMessages(UUID id) {
+        return messageMapper.getArchiveMessagesByToUserId(id);
+    }
+
     public void insertMessage(MessageFolder message) {
         messageMapper.insertMessage(message);
     }

@@ -6,8 +6,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   data:
     mongodb:
-      uri: mongodb://localhost:27017/mailbox
+      uri: mongodb://localhost:27017,localhost:27018,localhost:27019/mailbox?replicaSet=rs0
 mybatis:
   type-handlers-package: com.lil.mailbox.lilMailboxServer.datasource.postgres.typehandlers
-server:
-  port: 8081
+

@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  lil_mailbox_mongo1:
+    image: mongo:4.4
+    container_name: lil_mailbox_mongo1
+    ports:
+      - "27017:27017"
+    networks:
+      - mongo-cluster
+    command: mongod --replSet rs0 --bind_ip_all
+
+  lil_mailbox_mongo2:
+    image: mongo:4.4
+    container_name: lil_mailbox_mongo2
+    ports:
+      - "27018:27017"
+    networks:
+      - mongo-cluster
+    command: mongod --replSet rs0 --bind_ip_all
+    depends_on:
+      - lil_mailbox_mongo1
+
+  lil_mailbox_mongo3:
+    image: mongo:4.4
+    container_name: lil_mailbox_mongo3
+    ports:
+      - "27019:27017"
+    networks:
+      - mongo-cluster
+    command: mongod --replSet rs0 --bind_ip_all
+    depends_on:
+      - lil_mailbox_mongo1
+      - lil_mailbox_mongo2
+
+networks:
+  mongo-cluster:
+    driver: bridge

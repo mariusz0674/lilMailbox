@@ -30,15 +30,21 @@ public class MessageController {
         messageService.sendMessage(message);
     }
 
+    @PostMapping(value = "/reply", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void sendMessage(@RequestParam String messageUuid, @RequestBody Document message) {
+        messageService.replyMessage(messageUuid, message);
+    }
+
     @GetMapping("/message")
     public Document getMessage(@RequestParam String messageId) {
         return messageService.getMessageById(messageId);
     }
 
-//    @PostMapping("/replyToMessage")
-//    public reply(@RequestParam String messageId, @RequestBody Document message) {
-//        return messageService.replyMessage(messageId, message);
-//    }
+
+    @PostMapping(value = "/search")
+    public  List<Document> sendMessage(@RequestBody String query) {
+       return messageService.searchMessages(query);
+    }
 
 
 }

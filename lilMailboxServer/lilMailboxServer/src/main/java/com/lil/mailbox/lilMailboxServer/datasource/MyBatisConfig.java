@@ -1,6 +1,5 @@
 package com.lil.mailbox.lilMailboxServer.datasource;
 
-
 import com.lil.mailbox.lilMailboxServer.datasource.postgres.UUIDTypeHandler;
 import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.spring.annotation.MapperScan;
@@ -10,10 +9,6 @@ import javax.sql.DataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 
 @Configuration
 @EnableTransactionManagement

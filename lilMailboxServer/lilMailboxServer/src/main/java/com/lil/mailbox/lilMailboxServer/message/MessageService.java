@@ -14,6 +14,8 @@ public interface MessageService {
 
     void sendMessage(Document message);
 
+    List<Document> searchMessages(String searchQuery);
+
     void replyMessage(String messageId, Document message);
 
 }

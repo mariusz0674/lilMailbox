@@ -1,0 +1,58 @@
+[
+  {
+    "fromUser": "00000000-0000-0000-0000-000000000002",
+    "category": "inne",
+    "toUser": "00000000-0000-0000-0000-000000000001",
+    "content": "this is content one",
+    "title": "title a"
+  },
+  {
+    "fromUser": "00000000-0000-0000-0000-000000000002",
+    "category": "ankiety",
+    "toUser": "00000000-0000-0000-0000-000000000001",
+    "content": "this is content co two",
+    "title": "title b"
+  },
+  {
+    "fromUser": "00000000-0000-0000-0000-000000000001",
+    "category": "inne",
+    "toUser": "00000000-0000-0000-0000-000000000002",
+    "content": "this is content three",
+    "title": "title c"
+  },
+  {
+    "fromUser": "00000000-0000-0000-0000-000000000001",
+    "category": "bezpieczenstwo",
+    "toUser": "00000000-0000-0000-0000-000000000002",
+    "content": "this is content four",
+    "title": "title d"
+  },
+  {
+    "fromUser": "00000000-0000-0000-0000-000000000002",
+    "category": "inne",
+    "toUser": "00000000-0000-0000-0000-000000000003",
+    "content": "this is content five",
+    "title": "title e"
+  }
+]
+
+
+[
+  {
+    "_id": {"$oid": "665c535e3b5858642b1b632c"},
+    "category": "inne",
+    "content": "this is content",
+    "fromUser": "00000000-0000-0000-0000-000000000002",
+    "messageId": "3d67c3d1-6e0a-464d-9732-8fd0d55b5b80",
+    "read": false,
+    "title": "title xd",
+    "toUser": "00000000-0000-0000-0000-000000000001",
+    "replies": [
+      {
+        "content": "this is content reply ",
+        "date": {"$date": "2024-06-02T11:24:11.132Z"},
+        "fromUser": "00000000-0000-0000-0000-000000000002"
+      }
+    ]
+  }
+]

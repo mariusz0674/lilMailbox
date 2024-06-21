@@ -1,27 +1,33 @@
-# How to develop
+# Odpalenie developerskie
+odpalić bazki i ustawić namiary w application yaml
+można na jednym mongo.
+uruchomi się na porcie 8080
+# Wymaga uruchomionego Docker Desktop. Na linuxie nie sprawdzane
+# Odpalenie compose z lokalną apką
+- wymaga jdk 17
+- maven
 
-## Windows
-create catalog `C:/Docker/postgres/data`
+``` mvn clean package -DskipTests```
+zbuduje jarka
+następnie
 
-Need docker
-Wejdz w Docker/postgres
-`docker build -t lil_mailbox-postgres .`
-run
-`docker run --name lil_mailbox_postgres -e POSTGRES_PASSWORD=q1w2e3r4 -e POSTGRES_USER=user -p 5433:5432 -v C:/Docker/postgres/data:/var/lib/postgresql/data -d lil_mailbox-postgres
-`
-//`docker run --name lil_mailbox_postgres -e POSTGRES_PASSWORD=q1w2e3r4 -e POSTGRES_USER=user -p 5433:5432 -v C:/Docker/postgres/data:/var/lib/postgresql/data -d postgres`
+odkomentować
+    
+    build: . 
+zakomentować
 
-In intelij terminal `mvn clean install' ctrl + enter
-Run schema user
-Run schema message
-run user.sql
-run data.sql
+    image: mariusz0674/lil-mailbox-server:latest
+(uzycie w compose apki zbudowanej lokalnie)
 
-Teraz Redis
-`docker run --name lil_mailbox_redis -v C:/Docker/redis/data:/data -p 6379:6379 -d redis`
+odpalenie
 
-Mongo
+```docker-compose up --build```
 
-`docker run --name lil_mailbox_mongo -d -p 27017:27017 -v C:/Docker/mongo/data:/data/db mongo`
+# Odpalenie przy użuciu docker repository
+- wymagania: odpalony docker desktop
 
-czesc zapytan postman w resourceach
+po prostu
+
+```docker-compose up --build```
+
+apka dostępna na porcie :8083

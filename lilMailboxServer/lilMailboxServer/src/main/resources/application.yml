@@ -1,12 +1,28 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/postgres
-    username: user
-    password: q1w2e3r4
-    driver-class-name: org.postgresql.Driver
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://lil_mailbox_postgres:5432/postgres}
+    username: ${SPRING_DATASOURCE_USERNAME:user}
+    password: ${SPRING_DATASOURCE_PASSWORD:q1w2e3r4}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER-CLASS-NAME:org.postgresql.Driver}
   data:
     mongodb:
-      uri: mongodb://localhost:27017,localhost:27018,localhost:27019/mailbox?replicaSet=rs0
+      uri: mongodb://mongo1:27017,mongo2:27017,mongo3:27017/lil-mailbox-db?replicaSet=rs0
+    redis:
+      host: ${SPRING_REDIS_HOST:redis}
+      port:  ${SPRING_REDIS_PORT:6379}
+      timeout: 60000
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+  cache:
+    type: redis
+    redis:
+      time-to-live: 43200000
+  sql:
+    init:
+      mode: always
 mybatis:
   type-handlers-package: com.lil.mailbox.lilMailboxServer.datasource.postgres.typehandlers
 

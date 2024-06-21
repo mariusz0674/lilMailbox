@@ -1,0 +1,97 @@
+version: '3.8'
+
+services:
+  mongo1:
+    image: mongo:latest
+    container_name: mongo1
+    ports:
+      - 27017:27017
+    networks:
+      - lil-mailbox-net
+    volumes:
+      - mongo1-data:/data/db
+    command: --replSet rs0
+    healthcheck:
+      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'mongo1:27017',priority:1},{_id:1,host:'mongo2:27017',priority:0.5},{_id:2,host:'mongo3:27017',priority:0.5}]}) }" | mongosh --port 27017 --quiet
+      interval: 5s
+      timeout: 30s
+      retries: 30
+
+  mongo2:
+    image: mongo:latest
+    container_name: mongo2
+    ports:
+      - 27018:27017
+    networks:
+      - lil-mailbox-net
+    volumes:
+      - mongo2-data:/data/db
+    command: --replSet rs0
+
+  mongo3:
+    image: mongo:latest
+    container_name: mongo3
+    ports:
+      - 27019:27017
+    networks:
+      - lil-mailbox-net
+    volumes:
+      - mongo3-data:/data/db
+    command: --replSet rs0
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - 6379:6379
+    networks:
+      - lil-mailbox-net
+    volumes:
+      - redis-data:/data
+
+  postgres:
+    image: postgres:latest
+    container_name: lil_mailbox_postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: q1w2e3r4
+    ports:
+      - 5433:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - lil-mailbox-net
+
+  spring-app:
+#    build: .
+    image: mariusz0674/lil-mailbox-server:latest
+    container_name: lil-mailbox-app
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3
+      - redis
+      - postgres
+    networks:
+      - lil-mailbox-net
+    ports:
+      - 8083:8080
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongo1:27017,mongo2:27017,mongo3:27017/lil-mailbox-db?replicaSet=rs0
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+      SPRING_DATASOURCE_URL: jdbc:postgresql://lil_mailbox_postgres:5432/postgres
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: q1w2e3r4
+      SPRING_DATASOURCE_DRIVER-CLASS-NAME: org.postgresql.Driver
+
+networks:
+  lil-mailbox-net:
+    driver: bridge
+
+volumes:
+  mongo1-data:
+  mongo2-data:
+  mongo3-data:
+  redis-data:
+  postgres-data:

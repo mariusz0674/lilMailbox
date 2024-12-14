@@ -53,8 +53,8 @@ services:
     image: postgres:latest
     container_name: lil_mailbox_postgres
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: q1w2e3r4
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
       - 5433:5432
     volumes:
@@ -75,7 +75,7 @@ services:
     networks:
       - lil-mailbox-net
     ports:
-      - 8083:8080
+      - 8083:8083
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://mongo1:27017,mongo2:27017,mongo3:27017/lil-mailbox-db?replicaSet=rs0
       SPRING_REDIS_HOST: redis

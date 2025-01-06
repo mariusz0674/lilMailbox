@@ -19,7 +19,6 @@ public class MessageController {
         return messageService.getUserAllInboxMessages(userId);
     }
 
-
     @GetMapping("/userSent")
     public List<Document> getAllUserMessages(@RequestParam String userId) {
         return messageService.getUserAllSentMessages(userId);
@@ -30,7 +29,7 @@ public class MessageController {
         messageService.sendMessage(message);
     }
 
-    @PostMapping(value = "/reply", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "/reply", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void sendMessage(@RequestParam String messageUuid, @RequestBody Document message) {
         messageService.replyMessage(messageUuid, message);
     }
@@ -46,5 +45,9 @@ public class MessageController {
        return messageService.searchMessages(query);
     }
 
+    @DeleteMapping("/delete")
+    public void deleteMessage(@RequestParam String messageId) {
+        messageService.deleteMessage(messageId);
+    }
 
 }

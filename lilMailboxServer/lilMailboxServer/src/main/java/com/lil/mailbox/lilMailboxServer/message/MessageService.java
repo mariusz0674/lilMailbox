@@ -18,6 +18,7 @@ public interface MessageService {
 
     void replyMessage(String messageId, Document message);
 
+    void deleteMessage(String messageId);
 }
 
 

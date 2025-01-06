@@ -17,5 +17,4 @@ public class CountersController {
     public Map<String, String> getUserCounter(@RequestParam String userId) {
         return userUnreadCounterService.getUserUnreadCounters(UUID.fromString(userId));
     }
-
 }
